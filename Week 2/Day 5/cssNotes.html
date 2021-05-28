@@ -1,0 +1,57 @@
+Basic selectors
+Type : p
+Class : .some-class-name
+ID : #some-id (unique)
+
+<p>A paragraph>
+<p class = "some-class-name"> Classy <p>
+<p id ="some-id"> hi <p>
+
+Common selectors
+Descendent: a b 
+Basically means selects all b inside of a 
+
+div p {
+    background-color: blue;
+}
+ex)
+<div>
+    <p> will be blue </p>
+        <section>
+            <p> will also be blue</p>
+        </section>
+<div>
+
+Child : a > b 
+Selects all b that are direct Child
+
+div p {
+    background-color: red;
+}
+ex)
+<div>
+    <p> will be red </p>
+        <section>
+            <p> will not be blue</p>
+        </section>
+<div>
+
+Other Common selectors
+Comma-seperated : a, h1, p 
+Adjacent Sibling : a + b 
+General Sibling : a ~ b 
+First,Last,Nth-child : p:first-child 
+:hover, :active, :focus
+Attributes : input[type="text"] 
+
+
+BOX MODEL (Outwards to inwards)
+Margin -> Border -> Padding -> Element
+
+content-box vs border-box 
+content-box : width and height are set for the content 
+    - padding and border added after
+border-box : width and height are set for the entire box 
+    -padding and border are included in the calculation
+
+    

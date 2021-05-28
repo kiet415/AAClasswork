@@ -1,0 +1,32 @@
+HTML - Hypertext Markup Language
+Has opening/closing tag with contents inbetween
+<div> Hi there! </div>
+
+<head> and <body>
+Head has high level, background info
+Body has content of webpage
+
+
+HTML Attributes
+id - unique identifier
+class - common identifier that any can share
+title - text you would like to display when user hovers over element
+
+Semantics
+article, aside,figcaption,figure,footer,header,main,section,form
+
+Non-Semantic
+Div, span
+
+Common HTML Elements
+(h1-h6) headers(biggest to smallest)
+(a) tag used to create hyperlinks. URL to link to is specified by (href)
+(img) tag: used to create images. Url of image is specifiedby (src) attribute
+(ul) and (ol) : used to create links. (ul) is unordered. (ol) is ordered. Comprised of multiple (li) list item elements
+
+HTML forms
+Can collect user-inputted data
+Opening (form) tag takes two attributes that specify where to send form data when submittd
+(action) - specifies URL of HTTP
+(method) - specifies HTTP verb of request (almost always (POST))
+Comprised of text inputs,dropdowns, radio buttons, checkboxes, andother special input fields

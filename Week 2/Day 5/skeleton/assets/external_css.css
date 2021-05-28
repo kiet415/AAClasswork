@@ -1,0 +1,70 @@
+body {
+    font-family: Arial,sans-serif;
+    background-color: orangered;
+}
+h1 {
+    font-size: 38px;
+}
+h2 {
+    font-size: 32px;
+}
+
+.ingredients-list {
+    list-style: square inside;
+}
+
+ol {
+    list-style: armenian;
+}
+header > img {
+    width: 100px;
+}
+
+ul li a{
+    text-decoration: none;
+    color: inherit;
+}
+
+
+
+input[type="radio"] {
+    cursor: pointer;
+    outline: none;
+    width : 30px;
+    height : 30px;
+    -webkit-appearance: none;
+    background : url(stars.png);
+}
+
+input[type="radio"]:hover {
+    /* background-color: red; */
+    width : 30px;
+    height : 30px;
+    background-position: center;
+    
+}
+input[type="radio"]:checked {
+    width : 30px;
+    height : 30px;
+    background-position: bottom;
+}
+.submit {
+    cursor: pointer;
+    outline: none;
+}
+input:last-child {
+    background-color: gold;
+}
+input:last-child:hover {
+    background-color: orange
+}
+ol li:nth-child(odd) {
+    background-color: lightgrey;
+}
+
+h2 + .user_review {
+    border-top: 1px solid black;
+}
+
+
+
