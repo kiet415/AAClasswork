@@ -35,13 +35,20 @@ def largest_contiguous_subsum2(array)
     left = 0
     right = 0
     while l < array.length
-        sum = 
+        curr_sum += array[right]
+        max = curr_sum if curr_sum > max 
+        while curr_sum < 0
+            curr_sum-=array[left]
+            left+=1
+        end
+        right+=1
     end
+    return max
 end
 list = [5, 3, -7]
 p largest_contiguous_subsum(list) # => 8
 
-list = [2, 3, -6, 7, -6, 7]
+list = [2, 3, -6, 5, -6, 9]
 curr = 0 
 max = 7
                      
