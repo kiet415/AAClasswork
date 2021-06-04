@@ -61,10 +61,12 @@ p largest_contiguous_subsum(list) # => -1 (from [-1])
 
 
 def first_anagram?(str1, str2)
-    anagram_helper(str1).include?(str2)
+    anagram_helper(str1).include?(str2) 
 
 end
 
+str.length = n
+O((n!))
 def anagram_helper(str) #str = cd
     return [str] if str.length == 1
     letter = str[0]
@@ -82,6 +84,72 @@ def anagram_helper(str) #str = cd
     arr2
 end
 
+def second_anagram?(str1, str2)
+    str1.each_char do |c| 
+        return false if !str2.include?(c)  O(n)
+        idx = str2.index(c)                O(n)
+        str2 = str2[0...idx]+str2[idx+1..-1] O(n)
+    end
 
-p first_anagram?("gizmo", "sally")    #=> false
-p first_anagram?("elvis", "lives")    #=> true
+    return true if str2.empty? 
+end
+
+
+
+
+def third_anagram?(str1, str2)
+    sorted = str1.split("").sort.join("") 
+    sorted2 = str2.split("").sort.join("") 
+    sorted == sorted2                         
+end
+
+
+
+def fourth_anagram?(str1, str2)
+    hash1 = Hash.new()
+    hash2 = Hash.new()
+    str1.each_char do |c|
+        if hash1[c]
+            hash1[c]+=1
+        else
+            hash1[c]=1
+        end 
+    end 
+
+    str2.each_char do |c|
+        if hash2[c]
+            hash2[c]+=1
+        else  
+            hash2[c]=1
+        end   
+    end  
+
+    hash1 == hash2
+        
+end
+
+def fifth_anagram?(str1, str2)
+    hash1 = Hash.new()
+    str1.each_char do |c|
+        if hash1[c]
+            hash1[c]+=1
+        else
+            hash1[c]=1
+        end 
+    end 
+
+    str2.each_char do |c|
+        if hash1[c]
+            hash1[c]-=1
+        else  
+            return false
+        end   
+    end  
+
+    return true if hash1.values.all?{|e| e == 0}
+end
+
+p fifth_anagram?("gizmo", "sally")    #=> false
+p fifth_anagram?("elvis", "lives")    #=> true
+
+
