@@ -65,8 +65,6 @@ def first_anagram?(str1, str2)
 
 end
 
-str.length = n
-O((n!))
 def anagram_helper(str) #str = cd
     return [str] if str.length == 1
     letter = str[0]
@@ -86,9 +84,9 @@ end
 
 def second_anagram?(str1, str2)
     str1.each_char do |c| 
-        return false if !str2.include?(c)  O(n)
-        idx = str2.index(c)                O(n)
-        str2 = str2[0...idx]+str2[idx+1..-1] O(n)
+        return false if !str2.include?(c)  
+        idx = str2.index(c)                
+        str2 = str2[0...idx]+str2[idx+1..-1] 
     end
 
     return true if str2.empty? 
@@ -149,7 +147,40 @@ def fifth_anagram?(str1, str2)
     return true if hash1.values.all?{|e| e == 0}
 end
 
+
 p fifth_anagram?("gizmo", "sally")    #=> false
 p fifth_anagram?("elvis", "lives")    #=> true
 
 
+def bad_two_sum?(arr, sum)
+    (0...arr.length).each do |i1|
+        (i1+1...arr.length).each do |i2|
+            return true if arr[i1] + arr[i2] == sum
+        end
+    end
+    return false
+end
+
+def bad_two_sum2?(arr, sum)
+    arr = arr.sort
+    beg = 0
+    ending = arr.length-1
+    
+    while beg != ending
+        if sum > arr[beg] + arr[ending]
+            beg +=1
+        elsif  sum < arr[beg] + arr[ending]
+            ending -=1
+        else  
+            return true
+        end
+    end
+    return false
+end
+
+
+
+p"TWO SUM"
+arr = [0, 1, 5, 7]
+p bad_two_sum2?(arr, 6) # => should be true
+p bad_two_sum2?(arr, 10) # => should be false
