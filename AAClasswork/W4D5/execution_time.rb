@@ -180,7 +180,42 @@ end
 
 
 
+
+def two_sum?(arr, sum)
+    hash = Hash.new()
+    arr.each do |i|
+        diff = sum-i
+        if hash[diff]
+            return true
+        else    
+            hash[i] =1 
+        end   
+    end   
+    return false
+
+end
+
+
 p"TWO SUM"
 arr = [0, 1, 5, 7]
-p bad_two_sum2?(arr, 6) # => should be true
-p bad_two_sum2?(arr, 10) # => should be false
+p two_sum?(arr, 6) # => should be true
+p two_sum?(arr, 10) # => should be false
+
+def windowed_max_range(arr, size)
+    current_max = -999999
+    (0...arr.size).each do |i|
+        temp = arr[i...i+size]
+        if temp.length == size 
+            current_max = temp.max-temp.min if (temp.max-temp.min)>current_max 
+        end 
+    end
+    current_max
+end
+
+
+
+p "WINDOW!!!!!!"
+p windowed_max_range([1, 0, 2, 5, 4, 8], 2) # 4 # 4, 8
+p windowed_max_range([1, 0, 2, 5, 4, 8], 3) # 5 # 0, 2, 5
+p windowed_max_range([1, 0, 2, 5, 4, 8], 4) # 6 # 2, 5, 4, 8
+p windowed_max_range([1, 3, 2, 5, 4, 8], 5) # 6 # 3, 2, 5, 4, 8
