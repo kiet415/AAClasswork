@@ -1,14 +1,23 @@
 class MaxIntSet
+  attr_accessor :store
+
   def initialize(max)
+    @store = Array.new(max, false)
+    @max = max
   end
 
   def insert(num)
+    raise "Out of bounds" if num > @max
+    raise "Out of bounds" if num < 0
+    @store[num] = true
   end
 
   def remove(num)
+    @store[num] = false
   end
 
   def include?(num)
+    @store[num]
   end
 
   private
@@ -27,12 +36,17 @@ class IntSet
   end
 
   def insert(num)
+    bucket = num % @store.length
+    @store[bucket] << num
   end
 
   def remove(num)
+    
   end
 
   def include?(num)
+    @store.each { |sub| return true if sub.include?(num) }
+    return false
   end
 
   private
