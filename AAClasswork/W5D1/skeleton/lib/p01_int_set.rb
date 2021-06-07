@@ -1,3 +1,4 @@
+require 'byebug'
 class MaxIntSet
   attr_accessor :store
 
@@ -36,12 +37,13 @@ class IntSet
   end
 
   def insert(num)
-    bucket = num % @store.length
+    bucket = num % num_buckets
     @store[bucket] << num
   end
 
   def remove(num)
-    
+    bucket = num % num_buckets
+    @store[bucket].delete(num)
   end
 
   def include?(num)
@@ -69,24 +71,49 @@ class ResizingIntSet
   end
 
   def insert(num)
+    if !include?(num)
+      resize! if count == num_buckets
+      bucket = num % num_buckets
+      @store[bucket] << num 
+      @count += 1
+    end
   end
 
   def remove(num)
+    bucket = num % num_buckets
+    if include?(num)
+      @store[bucket].delete(num)
+      @count -= 1 
+    end
+    
   end
 
   def include?(num)
+    @store.each { |sub| return true if sub.include?(num) }
+    return false
   end
 
-  private
+
 
   def [](num)
     # optional but useful; return the bucket corresponding to `num`
   end
 
   def num_buckets
-    @store.length
+    @store.length 
   end
 
   def resize!
+    #debugger
+    if @count >= num_buckets
+      temp = Array.new(num_buckets * 2) { Array.new }
+      @store.each do |bucket| #sub
+        bucket.each do |n| #ele
+          new_bucket = n % (num_buckets * 2)  
+          temp[new_bucket] << n
+        end
+      end
+    end
+    @store = temp
   end
 end

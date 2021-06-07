@@ -154,9 +154,9 @@ describe ResizingIntSet do
     end
 
     it "should create twice as many buckets" do
-      prev_num_buckets = set.send(:num_buckets)
+      prev_num_buckets = set.send(:num_buckets)  #20
       21.times { |i| set.insert(i) }
-      expect(set.send(:num_buckets)).to eq(2 * prev_num_buckets)
+      expect(set.send(:num_buckets)).to eq(2 * prev_num_buckets) #40
     end
 
     it "should not change the count of the set" do
