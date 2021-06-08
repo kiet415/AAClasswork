@@ -1,4 +1,4 @@
-require 'rspec'
+  require 'rspec'
 require 'p03_hash_set'
 
 describe HashSet do

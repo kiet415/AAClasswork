@@ -1,4 +1,7 @@
-class HashSet
+require 'p01_int_set.rb'
+require 'p02_hashing.rb'
+
+class HashSet < ResizingIntSet
   attr_reader :count
 
   def initialize(num_buckets = 8)
@@ -7,6 +10,8 @@ class HashSet
   end
 
   def insert(key)
+    num = key.hash
+    super(num)
   end
 
   def include?(key)
