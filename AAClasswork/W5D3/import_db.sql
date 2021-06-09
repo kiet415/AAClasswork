@@ -88,3 +88,5 @@ VALUES
     (3, 3, 30);
     
 
+('All My Sons', 1947, (SELECT id FROM playwrights WHERE name = 'Arthur Miller')),
+  ('Long Day''s Journey Into Night', 1956, (SELECT id FROM playwrights WHERE name = 'Eugene O''Neill'));
