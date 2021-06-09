@@ -48,6 +48,14 @@ class User
 
     end
 
+    def authored_questions
+        Questions.find_by_author_id
+    end
+
+    def authored_replies
+        Reply.find_by_user_id
+    end
+
     def create
         raise "#{self} already in database" if @id
         QuestionsDatabase.instance.execute(<<-SQL, @fname, @lname)
@@ -80,7 +88,7 @@ class Question
         @id = options['id']
         @title = options['title']
         @body = options['body']
-        @user_id = options['user_id']
+        @author_id = options['author_id']
     end
 
     def self.find_by_id(id)
@@ -125,18 +133,26 @@ class Question
         Question.new(body_hash.first) 
     end
 
-    def self.find_by_user_id(user_id)
-        user = User.find_by_id(user_id)
-        user_hash = QuestionsDatabase.instance.execute(<<-SQL, user.id)
+    def self.find_by_author_id(author_id)
+        author = User.find_by_id(author_id)
+        author_hash = QuestionsDatabase.instance.execute(<<-SQL, author.id)
         SELECT
             *
         FROM
             questions
         WHERE
-            user.id = ?
+            author.id = ?
         SQL
 
-        user_hash.map { |user| Question.new(user) }
+        author_hash.map { |author| Question.new(author) }
+    end
+
+    def author
+        self.find_by_author_id(author_id)
+    end
+
+    def replies
+        Reply.find_by_question_id(id)
     end
 
     def create
@@ -225,6 +241,20 @@ class Reply
         Reply.new(id.first) 
     end
 
+    def self.find_by_parent_id(parent_id)
+        id = QuestionsDatabase.instance.execute(<<-SQL, parent_id)
+        SELECT
+            *
+        FROM
+            replies
+        WHERE
+            parent_id = ?
+        SQL
+        return nil unless parent_id.length > 0
+
+        Reply.new(id.first) 
+    end
+
     def self.find_by_question_id(question_id)
         question = Question.find_by_id(question_id)
         question_hash = QuestionsDatabase.instance.execute(<<-SQL, question.id)
@@ -266,6 +296,23 @@ class Reply
         Reply.new(body_hash.first) 
     end
 
+    def author
+        Reply.find_by_author_id(author_id)
+    end
+
+    def question
+        Question.find_by_question_id(question_id)
+    end
+
+    def parent_reply
+        return nil if !author_id
+        Reply.find_by_id(author_id)
+    end
+
+    def child_replies
+        Reply.find_by_parent_id(id)
+    end
+
     def create
         raise "#{self} already in database" if @id
         QuestionsDatabase.instance.execute(<<-SQL, @question_id, @parent_id, @author_id, @body)
@@ -288,6 +335,16 @@ class Reply
             id = ?
         SQL  
     end
+end
+
+class Question_Likes
+    def initialize(options)
+        @id = options['id']
+        @user_id = options['user_id']
+        @question_id = options['question_id]
+        @user_likes = options['user_likes]
+    end
+
 end
 
 hash = {

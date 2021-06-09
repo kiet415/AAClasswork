@@ -86,5 +86,4 @@ VALUES
     ((SELECT id FROM users WHERE fname= 'Homer' AND lname= "Simpson"), (SELECT id FROM questions WHERE title='Question 2'), 20),
     ((SELECT id FROM users WHERE fname= 'Bob' AND lname= "Burger"), (SELECT id FROM questions WHERE title='Question 3'), 30);
 
-    
 
