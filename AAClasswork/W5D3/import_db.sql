@@ -22,7 +22,7 @@ CREATE TABLE questions (
     id INTEGER PRIMARY KEY,
     title TEXT NOT NULL,
     body TEXT NOT NULL,
-    user_id INTEGER NOT NULL
+    user_id INTEGER NOT NULL,
 
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -30,25 +30,25 @@ CREATE TABLE questions (
 INSERT INTO
     questions (title, body, user_id)
 VALUES
-    ('Question 1 ' , 'What color is your fur coat? ' , 1),
-    ('Question 2 ' , 'What is your favorite donut? ' , 2),
-    ('Question 3 ' , 'Do you sell vegan burgers? ' , 3);
+    ('Question 1' , 'What color is your fur coat?' , (SELECT id FROM users WHERE fname= 'Hello' AND lname= "Kitty")),
+    ('Question 2' , 'What is your favorite donut?' , (SELECT id FROM users WHERE fname= 'Homer' AND lname= "Simpson")),
+    ('Question 3' , 'Do you sell vegan burgers?' , (SELECT id FROM users WHERE fname= 'Bob' AND lname= "Burger"));
 
 CREATE TABLE question_follows (
     id INTEGER PRIMARY KEY,
     user_id INTEGER NOT NULL,
-    question_id INTEGER NOT NULL
+    question_id INTEGER NOT NULL,
 
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (question_id) REFERENCES questions(id)
 );
 
 INSERT INTO 
     question_follows (user_id, question_id)
 VALUES
-    (1 , 1)
-    (2 , 2)
-    (3 , 3);
+    ((SELECT id FROM users WHERE fname= 'Hello' AND lname= "Kitty"), (SELECT id FROM questions WHERE title='Question 1')),
+    ((SELECT id FROM users WHERE fname= 'Homer' AND lname= "Simpson"), (SELECT id FROM questions WHERE title='Question 2')),
+    ((SELECT id FROM users WHERE fname= 'Bob' AND lname= "Burger"), (SELECT id FROM questions WHERE title='Question 3'));
 
 CREATE TABLE replies (
     id INTEGER PRIMARY KEY,
@@ -65,16 +65,15 @@ CREATE TABLE replies (
 INSERT INTO
     replies (question_id, parent_id, author_id, body)
 VALUES
-    (1, NULL, 1, 'White. '),
-    (2, NULL, 2, 'Pink Sprinkles. '),
-    (3, NULL, 3, 'Yes with vegan cheese. ');
-
+    ((SELECT id FROM questions WHERE title='Question 1'), NULL, (SELECT id FROM users WHERE fname= 'Hello' AND lname= "Kitty"), 'White. '),
+    ((SELECT id FROM questions WHERE title='Question 2'), NULL, (SELECT id FROM users WHERE fname= 'Homer' AND lname= "Simpson"), 'Pink Sprinkles. '),
+    ((SELECT id FROM questions WHERE title='Question 3'), NULL, (SELECT id FROM users WHERE fname= 'Bob' AND lname= "Burger"), 'Yes with vegan cheese. ');
 
 CREATE TABLE question_likes (
     id INTEGER PRIMARY KEY,
     user_id INTEGER NOT NULL,
     question_id INTEGER NOT NULL,
-    user_likes INTEGER NOT NULL
+    user_likes INTEGER NOT NULL,
 
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (question_id) REFERENCES questions(id)
@@ -83,10 +82,9 @@ CREATE TABLE question_likes (
 INSERT INTO
     question_likes (user_id, question_id, user_likes)
 VALUES
-    (1, 1, 10),
-    (2, 2, 20),
-    (3, 3, 30);
+    ((SELECT id FROM users WHERE fname= 'Hello' AND lname= "Kitty"), (SELECT id FROM questions WHERE title='Question 1'), 10),
+    ((SELECT id FROM users WHERE fname= 'Homer' AND lname= "Simpson"), (SELECT id FROM questions WHERE title='Question 2'), 20),
+    ((SELECT id FROM users WHERE fname= 'Bob' AND lname= "Burger"), (SELECT id FROM questions WHERE title='Question 3'), 30);
+
     
 
-('All My Sons', 1947, (SELECT id FROM playwrights WHERE name = 'Arthur Miller')),
-  ('Long Day''s Journey Into Night', 1956, (SELECT id FROM playwrights WHERE name = 'Eugene O''Neill'));
