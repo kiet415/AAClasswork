@@ -30,7 +30,7 @@ class User
         SQL
         return nil unless id.length > 0
 
-        Name.new(id.first) 
+        User.new(id.first) 
     end
 
     def self.find_by_name(fname, lname)
@@ -44,7 +44,7 @@ class User
         SQL
         return nil unless name.length > 0
 
-        Name.new(name.first) 
+        User.new(name.first) 
 
     end
 
@@ -73,7 +73,7 @@ class User
 
 end
 
-class Questions 
+class Question 
     attr_accessor :title, :body
 
     def initialize(options)
@@ -94,7 +94,7 @@ class Questions
         SQL
         return nil unless id.length > 0
 
-        Questions.new(id.first) 
+        Question.new(id.first) 
     end
 
     def self.find_by_title(title)
@@ -108,7 +108,7 @@ class Questions
         SQL
         return nil unless title_hash.length > 0
 
-        Questions.new(title_hash.first) 
+        Question.new(title_hash.first) 
     end
 
     def self.find_by_body(body)
@@ -122,7 +122,7 @@ class Questions
         SQL
         return nil unless body_hash.length > 0
 
-        Questions.new(body_hash.first) 
+        Question.new(body_hash.first) 
     end
 
     def self.find_by_user_id(user_id)
@@ -133,10 +133,10 @@ class Questions
         FROM
             questions
         WHERE
-            id = ?
+            user.id = ?
         SQL
 
-        user_hash.map { |user| Questions.new(user) }
+        user_hash.map { |user| Question.new(user) }
     end
 
     def create
@@ -164,6 +164,131 @@ class Questions
 
 end
 
+class Question_Follow
+    
+    def initialize(options)
+        @id = options['id']
+        @user_id = options['user_id']
+        @question_id = options['question_id']
+    end
+
+    def self.find_by_user_id(user_id)
+        user = User.find_by_id(user_id)
+        user_hash = QuestionsDatabase.instance.execute(<<-SQL, user.id)
+        SELECT
+            *
+        FROM
+            question_follows
+        WHERE
+            user.id = ?
+        SQL
+
+        user_hash.map { |user| Question_Follow.new(user) }
+    end
+
+    def self.find_by_question_id(question_id)
+        question = User.find_by_id(question_id)
+        question_hash = QuestionsDatabase.instance.execute(<<-SQL, question.id)
+        SELECT
+            *
+        FROM
+            question_follows
+        WHERE
+            question.id = ?
+        SQL
+
+        question_hash.map { |user| Question_follow.new(user) }
+    end
+end
+
+class Reply
+
+    def initialize(options)
+        @id = options['id']
+        @question_id = options['question_id']
+        @parent_id = options['parent_id']
+        @author_id = options['author_id']
+        @body = options['body']
+    end
+
+    def self.find_by_id(id)
+        id = QuestionsDatabase.instance.execute(<<-SQL, id)
+        SELECT
+            *
+        FROM
+            replies
+        WHERE
+            id = ?
+        SQL
+        return nil unless id.length > 0
+
+        Reply.new(id.first) 
+    end
+
+    def self.find_by_question_id(question_id)
+        question = Question.find_by_id(question_id)
+        question_hash = QuestionsDatabase.instance.execute(<<-SQL, question.id)
+        SELECT
+            *
+        FROM
+            replies
+        WHERE
+            question.id = ?
+        SQL
+
+        question_hash.map { |user| Reply.new(user) }
+    end
+
+    def self.find_by_author_id(author_id)
+        author = User.find_by_id(author_id)
+        author_hash = QuestionsDatabase.instance.execute(<<-SQL, author.id)
+        SELECT
+            *
+        FROM
+            replies
+        WHERE
+            author.id = ?
+        SQL
+
+        author_hash.map { |user| Reply.new(user) }
+    end
+    def self.find_by_body(body)
+        body_hash = QuestionsDatabase.instance.execute(<<-SQL, body)
+        SELECT
+            *
+        FROM
+            replies
+        WHERE
+            id = ?
+        SQL
+        return nil unless body_hash.length > 0
+
+        Reply.new(body_hash.first) 
+    end
+
+    def create
+        raise "#{self} already in database" if @id
+        QuestionsDatabase.instance.execute(<<-SQL, @question_id, @parent_id, @author_id, @body)
+        INSERT INTO
+            replies (question_id, parent_id, author_id, body)
+        VALUES
+            (?, ?, ?, ?)
+        SQL
+        @id = QuestionsDatabase.instance.last_insert_row_id
+    end
+
+    def update
+        raise "#{self} not in database" unless @id
+        QuestionsDatabase.instance.execute(<<-SQL, @question_id, @parent_id, @author_id, @body, @id)
+        UPDATE
+            replies
+        SET
+        question_id = ?, parent_id = ?, author_id = ? , body = ?
+        WHERE
+            id = ?
+        SQL  
+    end
+end
 
 hash = {
     'fname' => 'Homer',
