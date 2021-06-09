@@ -118,8 +118,9 @@ def casablanca_cast
   FROM
   actors
   JOIN
-  castings ON castings.movie_id = casablanca_id
-
+  castings ON castings.actor_id = actors.id
+  WHERE 
+    castings.movie_id = 27
 
   SQL
 end

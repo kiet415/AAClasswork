@@ -1,0 +1,11 @@
+Stack LIFO
+push(el)
+pop
+peek
+
+QUEUE
+enqueue(el) - add to back
+dequeue - remove and return element from front
+show - show but dont return it
+size 
+empty
