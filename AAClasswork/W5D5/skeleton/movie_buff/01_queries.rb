@@ -65,12 +65,13 @@ def directed_by_one_of(them)
   #
   # Find the id and title of all the movies directed by one of 'them'.
  
-  # .where("actors.name IN ?", them)
+  # .where("actors.name IN (?)", them)
 
   Movie
     .select(:id,:title)
     .joins(:director)
-    .where(actors: {name: them})
+    .where("actors.name IN (?)", them)
+    #.where(actors: {name: them})
     
     
 end
