@@ -88,4 +88,3 @@ def uma_movies
     .where(name : 'Uma Thurman')
     .order(:yr ASC)
 end
-  
