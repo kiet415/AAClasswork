@@ -9,8 +9,16 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+require 'securerandom'
+
 class ShortenedUrl < ApplicationRecord
     validates :long_url, :short_url, presence: true
     validates :long_url, :short_url, uniqueness: true
     
+    def self.random_code
+        SecureRandom.urlsafe_base64
+    end
 end
+
+# p ShortenedUrl.random_code
+p SecureRandom.base64
