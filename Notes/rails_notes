@@ -1,0 +1,116 @@
+https://gyazo.com/f1bc2a5de9966dc7fa7d91457eb7f1bf
+
+Rails - a service side MVC web-app framework
+
+    ActiveRecord - An ORM Frameowrk (the model in MVC)
+- Allows us to represent models and their data
+- Represent associations between data
+- validate models before they get persisted to DB
+- perform db operations (CRUD) in OOP fashion.
+
+    Migrations
+    $ rails generate migration AddPartNumberToProducts
+    $ bundle exec rails db:migrate
+- Incremental and reversible changes made to DB scheme allowing it to evolve over time
+- Not just a reails thing - ubiquitous to app framworks that work with relational DBs
+- Rails allows you to use an easy Ruby DSL to describe changes to your t ables raher than write raw SQL
+This is in the migrations file
+def up
+    create_table :products do |t|
+      t.string :name
+      t.text :description
+
+      t.timestamps
+    end
+  end
+def down
+    drop_table :products
+end 
+
+class Create < ActiveRecord::Migration[5.2]
+  def change
+    create_table :comments do |t|
+      t.text :body, null: false
+      t.integer :video_id, null: false
+      t.integer :commenter_id, null: false
+      t.integer :parent_comment_id, null: false
+
+
+      t.timestamps
+    end
+    add_index :comments, :video_id
+    add_index :comments, :commenter_id
+    add_index :comments, :parent_comment_id
+  end
+  
+end
+
+:boolean
+:date
+:datetime
+:float
+:integer
+:string
+:text
+:time
+
+Add the option null: false to add a NOT NULL constraint,
+Add the option default: value to specify a default value.
+
+
+Changing tables
+After you create a table, you may wish to modify it. Here are some of the most common methods:
+
+  add_column :table_name, :column_name, :type, options_hash
+  remove_column :table_name, :column_name
+  rename_column :table_name, :old_column_name, :new_column_name
+  rename_table :old_table_name, :new_table_name
+  add_index :table_name, [:column1, :column2], options_hash
+  change_column :table_name, :column_name, :type, options_hash; you can:
+  Change the data type of a column,
+  Add the option null: false to add a NOT NULL constraint,
+  Add the option default: value to specify a default value.
+
+
+  Model
+- Central component of MVC pattern
+- A class that represents and directly manages data, logic, and rules for a table. 
+  - Typically contains validations, associations and custom methods
+  - Inherits applicationrecord
+- One to one correspondence between model and table
+- An instance of this class / model represents a row in our table
+
+optional:true  - make foreign key optional 
+
+COMMON validations
+- validates :some_column, presence: true
+  similar to null: false
+- validates :other_column, uniqueness: true
+  similar to unique: true
+
+
+  Associations
+- Connections between two active record models
+- make common operations simpler and easier in your code 
+- We dont have to write SQL join statements
+
+class Strike < applicationrecord
+  belongs_to :student, 
+    foreign_key: :student_id,
+    class_name: :Student 
+end
+
+if you do a belongs_to, youll need a has_many
+
+has_many :chirps,  (METHOD NAME / ASSOCIATION)
+  foreign_key: :author_id,
+  class_name: :Chirp  (CLASS NAME WHERE WE'RE GETTING FROM)
+
+Using through
+has_many :enrollments,  (THIS LINE IS CALLED AN ASSOCIATION)
+        foreign_key: :student_id,
+        class_name: :Enrollment
+
+    has_many :enrolled_courses,
+        through: :enrollments,
+        source: :course

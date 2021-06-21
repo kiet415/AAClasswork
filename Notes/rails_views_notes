@@ -1,0 +1,67 @@
+Views 
+    - the client facing portion of rails 
+    - Comprises the multiple types of responses from controller 
+    e.g webpage vs web service
+    - Web page or template composition 
+        - html 
+        - css 
+        - JS 
+
+Rendering 
+    - views - JSON, HTML 
+    - Syntax render <template>
+    - ex) render :show
+        - rails knows to look here /app/views/chirps/show.html.erb
+        - based on controller name 
+
+
+Embedded Ruby (ERB)
+    -HTML templates augmented with ruby code 
+    - <% Ruby code here %> - executes ruby code w.o return value 
+    - <%= Ruby code here %> - executes ruby code with return value 
+File name example : show.html.erb
+
+index.html.erb EXAMPLE 
+<ul>
+    <% @chirps.each do |chirp| %>
+        <ul> 
+            <li> Body : <%= chirp.body %> </li>
+            <li> Author: <%= chirp.author.username %> </li> 
+            <li> Likes : <%= chirp.likes.count %> </li>
+            <br>
+        <ul> 
+    <% end %>
+</ul
+
+Using a partial . What we render matches name of file. "_chirp.html.erb"
+<ul>
+    <% @chirps.each do |chirp| %>
+        <%= render 'chirp' chirp: chirp, form: :index %>
+                            key value pairs 
+    <% end%>
+    also another way is <% = render @chirps %>
+<ul>
+
+
+NEW AND EDIT ROUTES 
+    - HTML/ERB template to create or update an instance of data 
+    - simply render templates that contain forms!
+    - all they do is render a form
+
+***FORM ANATOMY IMPORTANT***
+1. action(aka path/rails helper)
+2. HTTP method(ex: POST)
+3. inputs with labels (optional)
+4. submit button.
+
+<form action = "<%= chirps_url %>" method = "post"> 
+    <label> for = "chirp_body">Body: </label>
+    <input type = "text" id = "chirp_body" name = "chirp[body]">
+</form>
+
+CONTROLLER REDIRECTING
+Redirecting
+    - ends current request/ response cycle and initializes a second
+    - syntax: redirect_to <Rails URL Helper>
+    - example: redirect_to user_url(@user)
+    - Use the prefixes provided to you by rails routes 

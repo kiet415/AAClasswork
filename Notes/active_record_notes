@@ -1,0 +1,95 @@
+Querying methods like group, having, includes, joins, select and where 
+return an object of type ActiveRecord::Relation
+The Relation object looks a lot like an Array; like an Array you can 
+iterate through it or index into it.
+
+This is called laziness:
+
+users = User.where('likes_dogs = ?', true) # no fetch yet!
+
+# performs fetch here
+users.each { |user| puts "Hello #{user.name}" }
+# does not perform fetch; result is "cached"
+users.each { |user| puts "Hello #{user.name}" }
+
+ActiveRecord::Base::joins
+User.joins(:post_feedback) generates this query
+
+SELECT
+  users.*
+FROM
+  users
+JOIN
+  posts ON posts.author_id = users.id
+JOIN
+  comments ON comments.post_id = posts.id
+
+USING SELECT WITH JOIN
+users = User.joins(:posts).select("users.*, posts.*")
+users[0].user_name # => "ruggeri"
+users[0].title # => "First post!"
+
+ActiveRecord Finder methods
+Find - based on id
+First - based on pkey
+last - based on pkey 
+find
+where /where.not allows you to specify exact value ot match, range of values
+or multiple values
+
+Chaining Queries
+group
+having
+order
+offset
+limit
+
+Calculations/Aggregations
+count
+sum
+average
+min
+max
+
+Joins
+.joins/left_outer_joins()
+  -takes association names as parameter
+returns a relation
+
+Using Select with Joins
+When using #joins, you must include the joined table's columns in #select
+in order to have acces to columns from joins table in returned results
+users = User.joins(:chirps).select("*")
+
+.pluck - gets value as a []
+(USE PLUCK INSTEAD OF SELECT SINCE SELECT RETURNS AN ACTIVE RECORD OBJECT)
+
+N+1 Queries
+posts = user1.posts
+res = {}
+posts.each do |post|
+  res[post] = post.comments.length
+end
+You make 1 query for user.posts. Then, you make N more queries to find comments length for each post. This is a N+1 query
+
+Includes and Eager Loading for N+1 Queries
+#includes takes association names as parameters
+posts = user1.posts.includes(:comments)
+res = {}
+posts.each do |post|
+  res[post] = post.comments.length
+end
+
+Joins for N+1 Queries
+Creates single query fetching all data into single table.
+Ideally used when using aggregation on the associated data e.g count
+
+posts = user1
+  .posts 
+  .select("posts.*, COUNT(*) as comments_count")
+  .joins (:comments)
+  .group("posts.id")
+
+posts.map do|posts|
+  [post.title, post.comments_count]
+end

@@ -1,0 +1,12 @@
+Create new rails project
+
+$ rails new URLShortener -G --database=postgresql
+to create and migrate your database.
+
+$bundle exec rails db:setup 
+$bundle exec rails db:create
+
+To generate a migration
+Migrations are stored as files in the db/migrate directory, one for each migration class
+$ rails generate migration AddPartNumberToProducts
+$ bundle exec rails db:migrate  

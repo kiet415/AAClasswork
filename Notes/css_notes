@@ -1,0 +1,52 @@
+Objectives - CSS Reset, display (block, inline, inline-block, flex)
+
+
+CSS Reset
+To make sure we apply styles to our website, we get the same style for
+different internet browsers that will overwrite all built in
+styles.
+
+Have a boiler plate and just c/p it. 
+
+
+Display - types of boxes
+    - block
+    - inline
+    - inline-block
+    - *flex
+
+block <div>
+    Tries to be as wide as possible
+    content before and after box appears on seperate line 
+    Can have any other element as child.
+
+Inline <span>
+    Allows other elements to its left and right
+    cannot have a width and height set 
+    doesnt respect top/bottom  margin/padding
+
+Inline-block 
+    Allows other elements to its left and right
+    Respect width/height, and margin/padding (including top/bottom)
+
+Float
+    Useful for making a print design layout (Like a newspaper)
+    left,right,none
+    clear: left, right, none, both
+    Removed from normal flow of page, but things "float" around it (still in flow)
+    
+Clearfix
+    if a floating element is "floating" outside of its container this its a clearfix
+
+Flex   
+    If there is one css skill to master, this is it
+    goes onn the container to affect the layout of the children
+    main idea is to give the container the ability to alter it's children
+        placement and order to best fill available space
+    Intended to be a more flexible way of managing the content position
+        and size on a site.
+
+    *Use justify-content for location along main axis  (center, flex-start,flex-end )
+    *align-items work along cross axis (stretch, center, flex-start,flex-end)
+    *flex direction for direction main axis (row, column)
+    

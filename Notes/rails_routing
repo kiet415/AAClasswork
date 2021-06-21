@@ -1,0 +1,49 @@
+MVC OVERVIEW
+
+
+HTTP Methods
+GET (get something from db)
+POST (insert something into DB)
+PATCH/PUT (change something in DB)
+DELETE  (remove something from DB)
+
+
+COMPONENETS OF HTTP RESPONSE
+    Status (e.g 200,302,404)
+        - indicates type of response (successful or not)
+    Body (e.g actual HTML document or data formatted as JASON)
+        -actual data/content  the server responded with
+
+RAILS ROUTER
+    Takes in HTTP Requests, decides where to send them
+    Router instantiates an instance of a controller and 
+    involes an action on that controller
+
+REST:Reprensentation State Transfer
+    REST is a standardized way to interpret an http Requests
+    and extrapolate the desired response from the server
+
+
+
+CHIRP Routes EXAMPLE
+get "/chirps", to: "chirps#index"
+post "/chirps", to: "chirps#create"
+get "/chirps/:id", to: "chirps#show"
+patch "/chirps/:id", to: "chirps#update"
+delete "/chirps/:id", to: "chirps#destroy"
+
+
+
+Controller - Takes in HTTP Requests, decides what to do with them   
+            and how to respond 
+    Controllers work with models and views to populate 
+
+Params - three ways to pass params in HTTP Request 
+    -wildcards inside a Route 
+    -via the query string 
+    -inside the Body
+
+SETTING UP Controllers
+class UsersController < ApplicationController   (ALWAYS PLURAL)
+
+end
