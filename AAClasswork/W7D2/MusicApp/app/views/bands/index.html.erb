@@ -1,0 +1,9 @@
+<h1> Bands List </h1>
+
+<ul>
+    <% @bands.each do |band| %>
+        <form method = 'patch' action = "<%= band_url(band) %>">    
+            <li> <a href = "<%= band_url(band) %>">  <%= band.name %> </a> </li>
+        </form>
+    <% end %>
+</ul>
