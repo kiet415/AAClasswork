@@ -1,7 +1,33 @@
 .main-nav {
-
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+button {
+  padding: 10px;
+}
+.subscribe-btn:hover {
+  background-color: rgb(25, 115, 194);
+}
+.login-btn:hover {
+  background-color: rgb(25, 115, 194);
 }
 
+.login-btn , .subscribe-btn{
+  background-color: rgb(125, 176, 254);
+}
+
+.sections-btn:hover {
+  background-color: lightgray;
+}
+
+.search-btn:hover {
+  background-color: lightgray;
+}
+
+.setting-btn:hover{
+  background-color: lightgray;
+}
 .left-nav > ul,
 .right-nav > ul {
 
@@ -11,7 +37,7 @@
 
   > ul {
     > li {
-
+      display: inline-block;
     }
   }
 
@@ -25,7 +51,7 @@
   > ul {
 
     > li {
-  
+      display: inline-block;
     }
 
     > li:last-of-type {

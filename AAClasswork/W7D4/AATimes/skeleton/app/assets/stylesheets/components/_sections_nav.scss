@@ -1,0 +1,14 @@
+a:not(:last-child):hover {
+    background-color: lightgray;
+}
+a:last-child:hover {
+    text-decoration: underline;
+}
+.sections-list {
+    padding-top: 10px;
+    text-align: center;
+    
+}
+a {
+    margin-right: 15px;
+}
