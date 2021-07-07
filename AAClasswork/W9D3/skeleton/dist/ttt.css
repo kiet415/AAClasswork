@@ -1,0 +1,44 @@
+ul { 
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    height: 300px;
+}
+
+
+li {
+    width: 90px;
+    height: 100px;
+    background-color: gray;
+    border: 2px solid black;
+    list-style: none;
+}
+
+li:hover {
+    background-color: yellow;
+}
+
+
+.x {
+    background-color: white;
+}
+
+
+.o {
+    background-color: white;
+}
+
+.x::after {
+    content: "X";
+    color: red;
+    font-size: 100px;
+    margin-left: 10px;
+    font-style: normal;
+}
+
+.o::after {
+    content: "O";
+    color: blue;
+    font-size: 100px;
+    margin-left: 10px;
+}
