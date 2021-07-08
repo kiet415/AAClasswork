@@ -32,13 +32,24 @@ li:hover {
     content: "X";
     color: red;
     font-size: 100px;
-    margin-left: 10px;
+    margin-left: 12px;
+    margin-bottom: 6px;
     font-style: normal;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .o::after {
     content: "O";
     color: blue;
     font-size: 100px;
-    margin-left: 10px;
+    margin-left: 12px;
+    margin-bottom: 6px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
+h1 {
+    background-color: goldenrod;
+    font-size: 60px;
+}
+
+

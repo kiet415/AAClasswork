@@ -1,4 +1,4 @@
-
+//const script = require('../ttt_node/playScript.js');
 
 class View {
   constructor(game, el) {
@@ -33,7 +33,7 @@ class View {
     const el = e.target;
     this.makeMove(el);
   }
-
+  
   makeMove(cell) {
     let game = this.game
     let pos = JSON.parse(cell.dataset.pos);
@@ -41,11 +41,22 @@ class View {
     //console.log(pos)
     cell.className = player;
     game.playMove(pos);
-
+    
     if(game.isOver()) {
       console.log("game over");
-      alert("WINNER IS " + game.winner());
+      if(game.winner()) {
+        alert("WINNER IS " + game.winner());
+        const h1 = document.createElement('h1');
+        this.el.append(h1);
+        h1.append("WINNER IS " + game.winner());
+      } else {
+        alert("TIE GAME");
+        const h1 = document.createElement('h1');
+        this.el.append(h1);
+        h1.append("TIE GAME");
+      }
       this.el.removeEventListener("click", this.handleClick);
+      //script.completion();
     }
   }
 }

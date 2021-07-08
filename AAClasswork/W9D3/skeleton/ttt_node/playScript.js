@@ -1,4 +1,4 @@
-let Game = require('./game.js');
+let Game = require('../src/game.js');
 const readline = require('readline');
 const reader = readline.createInterface({
   input: process.stdin,
@@ -18,3 +18,5 @@ function completion() {
     }
   });
 };
+
+module.exports = playScript;
