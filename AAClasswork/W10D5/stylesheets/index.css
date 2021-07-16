@@ -1,0 +1,28 @@
+.page {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.clock {
+    font-size: 30px;
+    width: 30%;
+    
+}
+.display-time {
+    background-color: orange;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px black solid;
+    height: 100px;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.time, .date {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
