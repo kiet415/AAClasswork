@@ -1,5 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {todosReducer} from "./actions/todo_actions"
+
+
 
 document.addEventListener("DOMContentLoaded", (event) => {
     
