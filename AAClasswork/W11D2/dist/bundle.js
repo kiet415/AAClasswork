@@ -222,9 +222,11 @@ var stepsReducer = function stepsReducer() {
 
   switch (action.type) {
     case _actions_steps_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_STEPS:
-      for (var i = 0; i < action.length; i++) {
-        nextState[action[i].id] = action[i];
-      }
+      action.steps.forEach(function (step) {
+        nextState[step.id] = step;
+      }); // for(let i = 0; i < action.length; i++) {
+      //     nextState[action[i].id] = action[i];
+      // }
 
       return nextState;
 
@@ -282,13 +284,12 @@ var todosReducer = function todosReducer() {
 
   switch (action.type) {
     case _actions_todo_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_TODOS:
-      // action.forEach(todo  => {
-      //     nextState[todo.id] = todo;
-      // } )
-      for (var i = 0; i < action.length; i++) {
-        nextState[action[i].id] = action[i];
-      } //nextState[action.todos.id] = action.todos
-
+      action.todos.forEach(function (todo) {
+        nextState[todo.id] = todo;
+      }); // for(let i = 0; i < action.length; i++) {
+      //     nextState[action[i].id] = action[i];
+      // }
+      //nextState[action.todos.id] = action.todos
 
       return nextState;
 

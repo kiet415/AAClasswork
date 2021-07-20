@@ -23,12 +23,12 @@ export const todosReducer = (oldState = initialState, action) => {
     
     switch (action.type) {
         case RECEIVE_TODOS:
-            // action.forEach(todo  => {
-            //     nextState[todo.id] = todo;
-            // } )
-            for(let i = 0; i < action.length; i++) {
-                nextState[action[i].id] = action[i];
-            }
+            action.todos.forEach(todo  => {
+                nextState[todo.id] = todo;
+            } )
+            // for(let i = 0; i < action.length; i++) {
+            //     nextState[action[i].id] = action[i];
+            // }
             //nextState[action.todos.id] = action.todos
             return nextState;
         case RECEIVE_TODO:
