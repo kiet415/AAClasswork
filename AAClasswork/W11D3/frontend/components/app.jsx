@@ -1,6 +1,5 @@
 import React from "react"
-import { ToDoList } from "./todo_list";
-
+import ToDoListContainer from "./todo_list_container"
 
 export class App extends React.Component {
     constructor(props) {
@@ -10,7 +9,7 @@ export class App extends React.Component {
         return (
             <div>
                 Working App
-                <ToDoList/>
+                <ToDoListContainer/>
             </div>
         )
     }
