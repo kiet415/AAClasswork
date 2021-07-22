@@ -10,7 +10,7 @@ class ToDoList extends React.Component{
 
     render(){
         const allToDos = this.props.todos.map(todo => {
-            return <ToDoItem todo={todo}/>
+            return <ToDoItem todo={todo} removeToDo={this.props.removeToDo}/>
         })
 
         return(

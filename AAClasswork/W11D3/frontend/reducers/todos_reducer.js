@@ -35,6 +35,7 @@ export const todosReducer = (oldState = initialState, action) => {
             const newTODO = {[action.todo.id] : action.todo}
             return Object.assign({}, oldState , newTODO);
         case REMOVE_TODO:
+            debugger
             delete nextState[action.todo.id]
             return nextState;
         default:

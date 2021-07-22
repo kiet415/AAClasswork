@@ -1,25 +1,28 @@
 import React from "react";
+import ToDoListContainer from '../components/todo_list_container'
 
 export const ToDoItem = (props) => {
-    // const {todos} = props
-    // todos.map(todo => {
-    //     return (
-    //         <li>
-    //             title: {todo.title}
-    //             <br />
-    //             body: {todo.body}
-    //         </li>
-    //     )
-    // })
-    // debugger
+
+    const remove = () => {
+        console.log(props)
+        props.removeToDo(props)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        props.removeToDo(props) 
+    }
+
     return (
         <div>
             <ul>
-                <li> 
+                <li>
+                    <ToDoListContainer />
                     title: {props.todo.title} 
                     <br />
                     body: {props.todo.body}
                 </li>
+            <button onClick={props.removeToDo}>Delete</button>
             </ul>
         </div>
     )
