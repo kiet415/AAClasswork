@@ -8,6 +8,10 @@ class ToDoList extends React.Component{
 
     }
 
+    componentDidMount(){
+        this.props.fetchTodos
+    }
+
     render(){
         const allToDos = this.props.todos.map(todo => {
             return <ToDoItem todo={todo} removeToDo={this.props.removeToDo}/>
