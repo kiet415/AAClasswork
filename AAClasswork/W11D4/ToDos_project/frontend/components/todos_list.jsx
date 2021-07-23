@@ -13,6 +13,7 @@ class ToDoList extends React.Component{
     }
 
     render(){
+        debugger
         const allToDos = this.props.todos.map(todo => {
             return <ToDoItem todo={todo} removeToDo={this.props.removeToDo}/>
         })

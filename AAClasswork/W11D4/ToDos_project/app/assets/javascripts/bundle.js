@@ -197,7 +197,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "receiveTodos": () => (/* binding */ receiveTodos),
 /* harmony export */   "receiveTodo": () => (/* binding */ receiveTodo),
 /* harmony export */   "removeTodo": () => (/* binding */ removeTodo),
-/* harmony export */   "fetchTodos": () => (/* binding */ fetchTodos)
+/* harmony export */   "fetchTodos": () => (/* binding */ fetchTodos),
+/* harmony export */   "createTodo": () => (/* binding */ createTodo)
 /* harmony export */ });
 /* harmony import */ var _util_todo_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/todo_api_util */ "./frontend/util/todo_api_util.js");
 
@@ -225,6 +226,11 @@ var removeTodo = function removeTodo(todo) {
 var fetchTodos = function fetchTodos(dispatch) {
   return _util_todo_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchTodos().then(function (todos) {
     return dispatch(receiveTodo(todos));
+  });
+};
+var createTodo = function createTodo(todo) {
+  return _util_todo_api_util__WEBPACK_IMPORTED_MODULE_0__.createTodo(todo).then(function (todo) {
+    return dispatch(receiveTodo(todo));
   });
 };
 
@@ -256,7 +262,7 @@ var ToDoItem = function ToDoItem(props) {
     props.removeToDo(props);
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_todo_list_container__WEBPACK_IMPORTED_MODULE_1__.default, null), "title: ", props.todo.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), "body: ", props.todo.body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, "title: ", props.todo.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), "body: ", props.todo.body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: props.removeToDo
   }, "Delete")));
 };
@@ -412,12 +418,12 @@ var ToDoForm = /*#__PURE__*/function (_React$Component) {
     _defineProperty(_assertThisInitialized(_this), "handleSubmit", function (e) {
       e.preventDefault();
 
-      _this.props.receiveTodo(_this.state);
-
-      _this.setState({
-        id: _this.uniqueId(),
-        title: "",
-        body: ""
+      _this.props.createTodo(_this.state).then(function () {
+        return _this.setState({
+          id: _this.uniqueId(),
+          title: "",
+          body: ""
+        });
       });
     });
 
@@ -497,6 +503,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchTodos: function fetchTodos(toDo) {
       dispatch((0,_actions_todo_actions__WEBPACK_IMPORTED_MODULE_1__.fetchTodos)(toDo));
+    },
+    createTodo: function createTodo(toDo) {
+      dispatch((0,_actions_todo_actions__WEBPACK_IMPORTED_MODULE_1__.createTodo)(toDo));
     }
   };
 };
@@ -557,10 +566,16 @@ var ToDoList = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(ToDoList, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchTodos;
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this = this;
 
+      debugger;
       var allToDos = this.props.todos.map(function (todo) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_all_todos__WEBPACK_IMPORTED_MODULE_1__.ToDoItem, {
           todo: todo,
@@ -814,16 +829,27 @@ var configureStore = function configureStore() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getTodos": () => (/* binding */ getTodos)
+/* harmony export */   "getTodos": () => (/* binding */ getTodos),
+/* harmony export */   "createTodo": () => (/* binding */ createTodo)
 /* harmony export */ });
 var getTodos = function getTodos() {
   return $.ajax({
     method: 'GET',
     url: '/api/todos'
-  }); // .then(
-  //     todos => console.log(todos), 
-  //     errors => console.log(errors)
-  // )
+  }).then(function (todos) {
+    return console.log(todos);
+  }, function (errors) {
+    return console.log(errors);
+  });
+};
+var createTodo = function createTodo(todo) {
+  return $.ajax({
+    method: "POST",
+    url: "/api/todos",
+    data: {
+      todo: todo
+    }
+  });
 };
 
 /***/ }),

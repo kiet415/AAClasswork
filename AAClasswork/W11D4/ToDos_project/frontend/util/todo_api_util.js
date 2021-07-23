@@ -3,10 +3,10 @@ export const getTodos = () => {
         method: 'GET',
         url: '/api/todos'
     })
-    // .then(
-    //     todos => console.log(todos), 
-    //     errors => console.log(errors)
-    // )
+    .then(
+        todos => console.log(todos), 
+        errors => console.log(errors)
+    )
 }
 
 export const createTodo = (todo) => {

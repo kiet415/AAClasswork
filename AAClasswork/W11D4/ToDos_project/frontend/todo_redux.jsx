@@ -7,6 +7,7 @@ import {receiveSteps, receiveStep, removeStep} from "./actions/steps_actions"
 import {Root} from "./components/root";
 import {getTodos} from './util/todo_api_util'
 
+
 document.addEventListener("DOMContentLoaded", (event) => {
     
     const store = configureStore();

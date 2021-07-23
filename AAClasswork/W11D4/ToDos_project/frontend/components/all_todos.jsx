@@ -17,7 +17,6 @@ export const ToDoItem = (props) => {
         <div>
             <ul>
                 <li>
-                    <ToDoListContainer />
                     title: {props.todo.title} 
                     <br />
                     body: {props.todo.body}
