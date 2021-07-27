@@ -15,7 +15,11 @@ class SessionsController < ApplicationController
     end
 
     def destroy
-        logout!
-        redirect_to new_session_url
+        if !@current_user
+            render json: ["Not logged in"], status 404
+        else
+            logout!
+            redirect_to new_session_url
+        end
     end
 end
