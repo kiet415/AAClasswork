@@ -13,5 +13,5 @@ document.addEventListener("DOMContentLoaded", () => {
   window.logout = logout
   window.getState = store.getState;
   window.dispatch = store.dispatch;
-  ReactDOM.render(<h1>Welcome to BenchBnB</h1>, root);
+  ReactDOM.render(<Root store={store}/>, root);
 });
